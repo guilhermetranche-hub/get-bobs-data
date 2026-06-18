@@ -1,0 +1,7 @@
+services:
+  get-bobs-data:
+    build: .
+    env_file: .env
+    volumes:
+      - ./output:/app/output
+
