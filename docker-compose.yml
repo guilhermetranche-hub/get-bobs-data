@@ -5,3 +5,16 @@ services:
     volumes:
       - ./output:/app/output
 
+  scraper:
+    image: mcr.microsoft.com/playwright/python:v1.60.0-jammy
+    working_dir: /app
+    env_file: .env
+    environment:
+      HEADLESS: "true"
+    volumes:
+      - ./scrape_subgroups.py:/app/scrape_subgroups.py:ro
+      - ./requirements.txt:/app/requirements.txt:ro
+      - ./output:/app/output
+    command: >
+      bash -c "pip install --quiet python-dotenv playwright==1.60.0 && python scrape_subgroups.py"
+
