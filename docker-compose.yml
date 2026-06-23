@@ -5,6 +5,14 @@ services:
     volumes:
       - ./output:/app/output
 
+  populate:
+    build: .
+    env_file: .env
+    volumes:
+      - ./output:/app/output
+      - ./scripts:/app/scripts:ro
+    command: python scripts/populate_inv_table.py
+
   scraper:
     image: mcr.microsoft.com/playwright/python:v1.60.0-jammy
     working_dir: /app
