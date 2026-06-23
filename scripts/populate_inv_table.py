@@ -21,7 +21,7 @@ Always:
 - brand = 'bobs'
 - classified_by = 'system_import'
 - classified_at = current timestamp
-- sales_quality_score = 100 (VENDAS), 50 (INSUMOS), 10 (others)
+- sales_quality_score = NULL (not available from source)
 - coupon_quantity_multiplier = 1.0
 - other ingredient/purchase fields = NULL
 """
@@ -74,14 +74,6 @@ def derive_row(product: dict) -> dict:
         category = json_category if json_category else None
         sub_group = subgroup
 
-    # Sales quality score
-    if goal == "VENDAS":
-        sales_score = 100
-    elif goal == "INSUMOS":
-        sales_score = 50
-    else:
-        sales_score = 10
-
     # Current timestamp for classification
     now = datetime.utcnow().isoformat()
 
@@ -96,7 +88,7 @@ def derive_row(product: dict) -> dict:
         "custom_category_client": None,
         "classified_by": "system_import",
         "classified_at": now,
-        "sales_quality_score": sales_score,
+        "sales_quality_score": None,
         "ingredient_name": None,
         "ingredient_match_source": None,
         "ingredient_name_canonical": None,
